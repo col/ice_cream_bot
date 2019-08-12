@@ -1,19 +1,23 @@
 defmodule IceCreamBot.Application do
-  # See https://hexdocs.pm/elixir/Application.html
-  # for more information on OTP Applications
   @moduledoc false
 
   use Application
 
   def start(_type, _args) do
     children = [
-      # Starts a worker by calling: IceCreamBot.Worker.start_link(arg)
-      # {IceCreamBot.Worker, arg}
+      {Plug.Cowboy, scheme: :https, plug: IceCreamBot.Router, options: cowboy_options},
     ]
 
-    # See https://hexdocs.pm/elixir/Supervisor.html
-    # for other strategies and supported options
     opts = [strategy: :one_for_one, name: IceCreamBot.Supervisor]
     Supervisor.start_link(children, opts)
+  end
+
+  defp cowboy_options do
+    [
+      keyfile: "priv/keys/localhost.key",
+      certfile: "priv/keys/localhost.cert",
+      otp_app: :ice_cream_bot,
+      port: 5000
+    ]
   end
 end

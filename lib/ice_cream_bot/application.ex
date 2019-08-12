@@ -5,19 +5,10 @@ defmodule IceCreamBot.Application do
 
   def start(_type, _args) do
     children = [
-      {Plug.Cowboy, scheme: :https, plug: IceCreamBot.Router, options: cowboy_options},
+      {Plug.Cowboy, scheme: :http, plug: IceCreamBot.Router, options: [port: 8080]},
     ]
 
     opts = [strategy: :one_for_one, name: IceCreamBot.Supervisor]
     Supervisor.start_link(children, opts)
-  end
-
-  defp cowboy_options do
-    [
-      keyfile: "priv/keys/localhost.key",
-      certfile: "priv/keys/localhost.cert",
-      otp_app: :ice_cream_bot,
-      port: 5000
-    ]
   end
 end

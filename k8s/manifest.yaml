@@ -1,0 +1,51 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: ice-cream-bot
+spec:
+  selector:
+    app: ice-cream-bot
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 8080
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: ice-cream-bot
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ice-cream-bot
+    spec:
+      containers:
+      - name: ice-cream-bot
+        image: colharris/ice_cream_bot:0.1.0
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ice-cream-bot
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+spec:
+  tls:
+  - hosts:
+    - icecreambot.colharris.com
+    secretName: icecreambot-prod-tls
+  rules:
+  - host: icecreambot.colharris.com
+    http:
+      paths:
+      - backend:
+          serviceName: ice-cream-bot
+          servicePort: 80

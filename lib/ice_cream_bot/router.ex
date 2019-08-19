@@ -1,4 +1,5 @@
 defmodule IceCreamBot.Router do
+  require Logger
   use Plug.Router
   alias IceCreamBot.SlackEventHandler
 
@@ -13,6 +14,7 @@ defmodule IceCreamBot.Router do
   end
 
   post "/slack/action" do
+    Logger.debug "Received Event: #{inspect(conn.body_params)}"
     response = SlackEventHandler.handle(conn.body_params)
     render(conn, response)
   end

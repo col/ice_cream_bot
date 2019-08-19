@@ -1,4 +1,11 @@
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  ice-cream-bot-config
+data:
+  LOG_LEVEL: "debug"
+---
 kind: Service
 apiVersion: v1
 metadata:
@@ -25,10 +32,13 @@ spec:
     spec:
       containers:
       - name: ice-cream-bot
-        image: colharris/ice_cream_bot:0.1.0
+        image: colharris/ice_cream_bot:6daa5b7a146075282dc0c824a369f862375fa081
         ports:
         - containerPort: 8080
           protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: ice-cream-bot-config
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress

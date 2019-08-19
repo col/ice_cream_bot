@@ -6,6 +6,7 @@ defmodule IceCreamBot.MixProject do
       app: :ice_cream_bot,
       version: "0.1.0",
       elixir: "~> 1.9",
+      build_embedded: Mix.env == :prod,
       start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
@@ -22,7 +23,8 @@ defmodule IceCreamBot.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:plug_cowboy, "~> 2.1"}
+      {:plug_cowboy, "~> 2.1"},
+      {:jason, "~> 1.1.2"}
     ]
   end
 end

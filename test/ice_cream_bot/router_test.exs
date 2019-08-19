@@ -13,11 +13,16 @@ defmodule IceCreamBot.RouterTest do
   end
 
   test "/slack/actions" do
+    request = %{
+      "token" => "Jhj5dZrVaK7ZwHHjRyZWjbDl",
+      "challenge" => "3eZbrw1aBm2rZgRNFdxV2595E9CY3gmdALWMmHkvFXO7tYXAYM8P",
+      "type" => "url_verification"
+    }
     conn =
-      conn(:post, "/slack/action")
+      conn(:post, "/slack/action", request)
       |> Router.call(%{})
 
     assert conn.status == 200
-    assert conn.resp_body == "{ \"status\": \"ok\" }"
+    assert conn.resp_body == "{\"challenge\":\"3eZbrw1aBm2rZgRNFdxV2595E9CY3gmdALWMmHkvFXO7tYXAYM8P\"}"
   end
 end

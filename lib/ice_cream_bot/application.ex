@@ -10,5 +10,7 @@ defmodule IceCreamBot.Application do
 
     opts = [strategy: :one_for_one, name: IceCreamBot.Supervisor]
     Supervisor.start_link(children, opts)
+
+    Slack.Bot.start_link(IceCreamBot.Bot, [], System.get_env("BOT_TOKEN"))
   end
 end

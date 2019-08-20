@@ -24,7 +24,8 @@ defmodule IceCreamBot.MixProject do
   defp deps do
     [
       {:plug_cowboy, "~> 2.1"},
-      {:jason, "~> 1.1.2"}
+      {:jason, "~> 1.1.2"},
+      {:slack, "~> 0.19.0"}
     ]
   end
 end

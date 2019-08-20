@@ -14,7 +14,7 @@ defmodule IceCreamBot.Router do
   end
 
   post "/slack/action" do
-    Logger.debug "Received Event: #{inspect(conn.body_params)}"
+    Logger.debug "Received Action: #{inspect(conn.body_params)}"
     response = SlackEventHandler.handle(conn.body_params)
     render(conn, response)
   end
